@@ -3,16 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <title>View Products</title>
+
+
 </head>
 <body>
 <h1>Items whose stock is low(less than equal to 50)</h1>
-{% for item in products%}
-    <ol>
-        <li>Product: {{item.prod_name}}</li>
-        <li>Category: {{item.category}}</li>
-        <li>Quantity: {{item.qty}}</li>
-        <li>Cost: {{item.cost}}</li>
-    </ol>
-{% endfor %}
+
+{% if products %}
+    <table border="1" width="2">
+        <tr>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+         {% for item in products %}
+         <tr>
+            <td>{{item.prod_name}}</td>
+            <td>{{item.category}}</td>
+            <td>{{item.qty}}</td>
+            <td>{{item.cost}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <h2>No products to show</h2>
+{% endif %}
+
 </body>
 </html>

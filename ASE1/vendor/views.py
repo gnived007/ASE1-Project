@@ -1,7 +1,7 @@
-from django.shortcuts import render, reverse, redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from vendor.models import Product,Category
 from vendor.forms import ProductsAdd
-from vendor.models import Category, Product
 
 
 def home(request):

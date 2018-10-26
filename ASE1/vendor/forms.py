@@ -11,4 +11,5 @@ class ProductsAdd(forms.ModelForm):
 class ProductsDisplay(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['category', 'prod_name', 'qty', 'cost', 'brand']
+        fields = ['category', 'prod_name', 'qty', 'cost']
+
