@@ -7,3 +7,8 @@ class ProductsAdd(forms.ModelForm):
         model = Product
         fields = '__all__'
 
+
+class ProductsDisplay(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['category', 'prod_name', 'qty', 'cost', 'brand']

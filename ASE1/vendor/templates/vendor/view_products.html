@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Products</title>
+</head>
+<body>
+<h1>Items whose stock is low(less than equal to 50)</h1>
+{% for item in products%}
+    <ol>
+        <li>Product: {{item.prod_name}}</li>
+        <li>Category: {{item.category}}</li>
+        <li>Quantity: {{item.qty}}</li>
+        <li>Cost: {{item.cost}}</li>
+    </ol>
+{% endfor %}
+</body>
+</html>
