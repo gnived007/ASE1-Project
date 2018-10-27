@@ -1,7 +1,43 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from vendor.models import Product,Category
+from vendor.models import Product, Category
 from vendor.forms import ProductsAdd
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('vendor:view_products')
+    else:
+        form = UserCreationForm()
+    return render(request, 'vendor/signup.html', {'form': form})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next'))
+            else:
+                return redirect('vendor:view_products')
+    else:
+        form = AuthenticationForm
+    return render(request, 'vendor/login.html', {'form': form})
+
+
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('home')
 
 
 def home(request):
@@ -12,6 +48,7 @@ def index(request):
     return render(request, 'vendor/index.html')
 
 
+@login_required(login_url='vendor:login')
 def add_products(request):
     categories = Category.objects.all()
     form_add = ProductsAdd()
