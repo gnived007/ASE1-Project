@@ -38,12 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'vendor',
+
 ]
 
+DEFAULT_FROM_EMAIL = 'jiteshmalipeddi92@gmail.com'
+SERVER_EMAIL = 'jiteshmalipeddi92@gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'jiteshmalipeddi92@gmail.com'
-EMAIL_HOST_PASSWORD = 'ilovemyparents'
+EMAIL_HOST_PASSWORD = 'Ilovemyparents'
 EMAIL_PORT = 587
 
 MIDDLEWARE = [

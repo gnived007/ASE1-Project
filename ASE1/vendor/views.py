@@ -3,19 +3,24 @@ from django.http import HttpResponse
 from vendor.models import Product, Category
 from vendor.forms import ProductsAdd
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from vendor.forms import Custom_UserCreationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def signup_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = Custom_UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            send_mail('Hello', 'Register', settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
             login(request, user)
             return redirect('vendor:view_products')
     else:
-        form = UserCreationForm()
+        form = Custom_UserCreationForm()
     return render(request, 'vendor/signup.html', {'form': form})
 
 

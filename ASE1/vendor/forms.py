@@ -1,5 +1,7 @@
 from django import forms
-from vendor.models import Product, Category
+from vendor.models import Product
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class ProductsAdd(forms.ModelForm):
@@ -8,8 +10,9 @@ class ProductsAdd(forms.ModelForm):
         fields = '__all__'
 
 
-class ProductsDisplay(forms.ModelForm):
-    class Meta:
-        model = Product
-        fields = ['category', 'prod_name', 'qty', 'cost']
+class Custom_UserCreationForm(UserCreationForm):
+    Contact_number = forms.IntegerField()
 
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']

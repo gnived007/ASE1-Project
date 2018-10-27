@@ -5,6 +5,8 @@
   <title>Add Products</title>
 </head>
 <body>
+<h2>Welcome {{ user.username }}</h2>
+
 <form method="post" enctype="multipart/form-data">
 {% csrf_token %}
 {{ form.as_p }}

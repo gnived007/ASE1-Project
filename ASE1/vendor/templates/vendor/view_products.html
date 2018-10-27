@@ -7,8 +7,13 @@
 
 </head>
 <body>
-<h1>Items whose stock is low(less than equal to 50)</h1>
 
+<h1>Items whose stock is low(less than equal to 50)</h1>
+{% if user.is_authenticated %}
+    <h2>Welcome {{ user.username }}</h2>
+{% else %}
+    <a href="{% url 'vendor:login' %}">Click here to login</a>
+{% endif %}
 {% if products %}
     <table border="1" width="2">
         <tr>
