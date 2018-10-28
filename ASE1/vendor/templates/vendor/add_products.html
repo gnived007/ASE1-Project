@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Add Products</title>
-</head>
-<body>
-<h2>Welcome {{ user.username }}</h2>
+{% extends 'vendor/base.html' %}
 
-<form method="post" enctype="multipart/form-data">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit"><br>
-</form>
-
-<form method="post" action="{% url 'vendor:logout' %}">
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <input type="submit" value="Logout">
-</form>
-</body>
-</html>
+    {{ form.as_p }}
+    <input type="submit" value="Submit"><br>
+    </form>
+{% endblock %}

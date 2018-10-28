@@ -1,48 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from vendor.models import Product, Category
+from vendor.models import Product
 from vendor.forms import ProductsAdd
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from vendor.forms import Custom_UserCreationForm
-from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-
-from django.core.mail import send_mail
-from django.conf import settings
-
-
-def signup_view(request):
-    if request.method == 'POST':
-        form = Custom_UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            send_mail('Hello', 'Register', settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
-            login(request, user)
-            return redirect('vendor:view_products')
-    else:
-        form = Custom_UserCreationForm()
-    return render(request, 'vendor/signup.html', {'form': form})
-
-
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            if 'next' in request.POST:
-                return redirect(request.POST.get('next'))
-            else:
-                return redirect('vendor:view_products')
-    else:
-        form = AuthenticationForm
-    return render(request, 'vendor/login.html', {'form': form})
-
-
-def logout_view(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('home')
 
 
 def home(request):
@@ -50,12 +10,11 @@ def home(request):
 
 
 def index(request):
-    return render(request, 'vendor/index.html')
+    return render(request, 'vendor/base.html')
 
 
-@login_required(login_url='vendor:login')
+@login_required(login_url='vendor:Authentication:login')
 def add_products(request):
-    categories = Category.objects.all()
     form_add = ProductsAdd()
     if request.method == 'POST':
         form = ProductsAdd(request.POST)
@@ -63,9 +22,9 @@ def add_products(request):
             form.save()
             return redirect('index')
         else:
-            return render(request, 'vendor/add_products.html', {'form': form_add, 'categories': categories})
+            return render(request, 'vendor/add_products.html', {'form': form_add})
 
-    return render(request, 'vendor/add_products.html', {'form': form_add, 'categories': categories})
+    return render(request, 'vendor/add_products.html', {'form': form_add})
 
 
 # To display items whose qty is less than 50
